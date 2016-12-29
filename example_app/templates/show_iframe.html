@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Adobe Sign Example - Show pre-filled Widget</h2>
+
+{% if widget %}
+    <iframe src="{{ widget.url }}"
+            width="100%" height="100%" frameborder="0"
+            style="border: 0; overflow: hidden; min-height: 600px; min-width: 600px;">
+    </iframe>
+{% endif %}
+
+<br/>
+<p><a href="/?token={{ access_token }}">Return Home</a></p>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Adobe Sign Example - Show Library Documents</h2>
+{% if documents %}
+    {% for document in documents %}
+        {{ document['name'] }}</br>
+    {% endfor %}
+{% endif %}
+
+<br/>
+<p><a href="/?token={{ access_token }}">Return Home</a></p>
+{% endblock %}

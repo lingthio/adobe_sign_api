@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Adobe Sign Example - Home</h2>
+
+<!-- Link that triggers please wait modal, and goes to that link -->
+<p><a href="{{ oauth_url }}" onclick="$('#modal_pane1').modal('show'); return true;">
+    Request a new Access Token</a></p>
+
+{% if access_token %}
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access Token = {{ access_token[0:10] }}......{{ access_token[-10:] }}<p>
+
+    <!-- Link that triggers please wait modal, and goes to that link -->
+    <p><a href="/show_library_documents?token={{ access_token }}" onclick="$('#modal_pane2').modal('show'); return true;">
+        Show Library Documents</a></p>
+
+    <!-- Link that triggers please wait modal, and goes to that link -->
+    <p><a href="/show_iframe?token={{ access_token }}" onclick="$('#modal_pane2').modal('show'); return true;">
+        Prepare and Sign a Document</a></p>
+{% endif %}
+
+<!-- Please wait modal -->
+<div id="modal_pane1"class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Please wait</h4>
+      </div>
+      <div class="modal-body">
+        <p>Requesting a new access token...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Please wait modal -->
+<div id="modal_pane2"class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Please wait</h4>
+      </div>
+      <div class="modal-body">
+        <p>Preparing a Document for you to sign...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
