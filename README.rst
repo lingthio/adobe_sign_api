@@ -8,8 +8,11 @@ by implementing a simple Flask web application that:
 - shows that Document in an IFrame (AdobeSign Widget), and
 - prompts the user to sign that Document.
 
-| AdobeSign API documetation:
+| Adobe Sign API documetation:
 | https://secure.na1.echosign.com/public/docs/restapi/v5
+
+| Adobe Sign Development Center:
+| https://secure.echosign.com/
 
 
 Motivation
@@ -30,19 +33,31 @@ Code organization
 * ``runserver.py`` starts a development web server that serves the Flask application.
 
 
-Example Python inteface to the Adobe Sign REST API
-==================================================
+About Adobe Sign Widgets
+------------------------
+I wanted to use Adobe Sign widgets to offer a generic document to each user,
+but with pre-filled form fields, customized to each individual user,
+before displaying the document and prompting the user to sign the document
+(I don't think that is too much to ask, right?).
 
-The purpose of this code repository is to be an additinal information source
-for developers wanting to interface to the Adobe Sign REST API.
+Unfortunately, as of December 2016, the Adobe Sign API was unable to offer
+this functionality. Please email me when this changes.
 
-I struggled a bit to make this work, and I'm publishing this code to save
-other developers from this struggle.
+Although a Widget can be created, and although at creation time,
+form fields can be pre-filled (once), the API does NOT
+allow the developer to re-use this one widget and pre-fill form fields
+before offering it to the user through an IFrame (many times).
 
-As such is is NOT meant to be a fully functioning package and it will likely NOT be maintained,
-beyond adding example functionality submitted by various contributors.
+The only way to pre-fill form fields is to create a Widget for each user.
+This is a slow process (because the Widget API also does NOT allow the use
+of Library Templates), and the API is further unable to delete the Widget
+once it's no longer in use (and there is no manual bulk-delete ability either).
 
-Though it's in Python, it probably serves developers of other programming languages too.
+The provided ``example.pdf``, also does not include the right form field names
+and form field types for the required email and signature form fields,
+so Adobe Sign appends an email and signature field at the bottom of ``example.pdf``.
+I think you might be able to remedy this by adding the proper form fields
+to this document.
 
 
 Installation
@@ -63,7 +78,7 @@ It is assumed that you have virtualenv and virtualenvwrapper installed and confi
 
 Configuring Adobe Sign API Application
 --------------------------------------------------
-- Create an account at Adobe Sign Development Center and login: https://secure.na1.echosign.com/
+- Create an account at Adobe Sign Development at https://secure.echosign.com/
 - Navigate to ``API`` > ``Adobe Sign API`` > ``API Applications``.
 - Add a new API Application (plus sign icon).
 - Select this API Application
@@ -71,7 +86,7 @@ Configuring Adobe Sign API Application
 - Take note of ``Client ID`` and ``Client Secret``.
 - ``Redirect URI``: ``https://localhost:5000/adobe_sign/oauth_redirect``
 
-    - This must start with ``https`` and must be served by our Example web application.
+    - This must start with ``https`` and must be served by our web application.
 
 - Enable the appropriate ``Enabled Scopes``:
 
@@ -203,16 +218,6 @@ In our example, this is done in adobe_sign/adobe_sign.py; get_api_access_point()
 See https://secure.na1.echosign.com/public/docs/restapi/v5
 
 
-About Creating Widgets
-----------------------
-Note: The transient document must include an email form field. If not, Adobe Sign will add an extra page
-to the PDF with a signature and email field.
-
-Note: The email address will be verified, unless email address verification has been disabled.
-Go to https://secure.na1.echosign.com/ > Account > Account Settings > Signature Preferences >
-Widget Email Verification (near the bottom of this page).
-
-
 Troubleshooting
 ---------------
 If the ``Request new Access Token`` link displays this error message::
@@ -224,6 +229,11 @@ You need to check the following:
 - example_app/local_settings.py: ADOBE_SIGN_CLIENT_ID is properly set
 - example_app/local_settings.py: ADOBE_SIGN_CLIENT_SECRET is properly set
 - Your ``Redirect URI`` in API Application configuration in Adobe Sign includes ``https://localhost:5443/adobe_sign/oauth_redirect``.
+
+
+See also
+========
+signinghub_api: https://github.com/lingthio/signinghub_api
 
 
 Contributors

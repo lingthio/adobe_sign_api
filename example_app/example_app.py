@@ -8,14 +8,11 @@ app = Flask(__name__)
 # Edit local_settings.py to reflect your CLIENT_ID and CLIENT_SECRET
 app.config.from_pyfile('local_settings.py')    # Read example_app.local_settings.py
 
-# Make sure that the API Application Configuration at Adobe Sign
-# includes this exact URL in its 'Redirect URI' setting.
-OAUTH_REDIRECT_URL = 'http://localhost:5000/adobe_sign/oauth_redirect'
-
-adobesign_api = AdobeSignAPI(     # Initialize the AdobeSign package
+# Initialize the AdobeSign package
+adobesign_api = AdobeSignAPI(
         app.config.get('ADOBE_SIGN_CLIENT_ID'),
         app.config.get('ADOBE_SIGN_CLIENT_SECRET'),
-        OAUTH_REDIRECT_URL)
+        app.config.get('ADOBE_SIGN_REDIRECT_URL'))
 
 
 # Display the home page
@@ -112,16 +109,16 @@ def show_iframe():
         # Pre-fill form fields
         "mergeFieldInfo": [
             {
-                "fieldName": 'Name_Last',
-                "defaultValue": 'Pre-filled last name',
+                "fieldName":    app.config.get('FIELD1_NAME',  'Name_Last'),
+                "defaultValue": app.config.get('FIELD1_VALUE', 'Pre-filled Value One'),
             },
             {
-                "fieldName": 'Name_First',
-                "defaultValue": 'Pre-filled first name',
+                "fieldName":    app.config.get('FIELD2_NAME',  'Name_First'),
+                "defaultValue": app.config.get('FIELD2_VALUE', 'Pre-filled Value Two'),
             },
             {
-                "fieldName": 'Address_1',
-                "defaultValue": 'Pre-filled address',
+                "fieldName":    app.config.get('FIELD3_NAME',  'Address_1'),
+                "defaultValue": app.config.get('FIELD3_VALUE', 'Pre-filled Value Three'),
             },
         ],
         # Redirect to completion URL after signing
