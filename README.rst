@@ -8,9 +8,9 @@ by implementing a simple Flask web application that:
 - shows that Document in an IFrame (AdobeSign Widget), and
 - prompts the user to sign that Document.
 
-| Adobe Sign API documetation:
+| Adobe Sign API documentation:
 | https://secure.na1.echosign.com/public/docs/restapi/v5
-
+|
 | Adobe Sign Development Center:
 | https://secure.echosign.com/
 
