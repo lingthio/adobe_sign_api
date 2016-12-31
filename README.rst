@@ -233,7 +233,9 @@ You need to check the following:
 
 See also
 ========
-signinghub_api: https://github.com/lingthio/signinghub_api
+
+- hellosign_api: https://github.com/lingthio/hellosign_api
+- signinghub_api: https://github.com/lingthio/signinghub_api
 
 
 Contributors
